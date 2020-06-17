@@ -34,23 +34,28 @@ class Solution:
         s = []
         # 将nums的string转换成为  list
         nums = list(map(int, nums))
+        print(nums)
         # 循环遍历每个 数字
         for i in range(len(nums)):
             number = int(nums[i])
+            print(number)
             # 从高位往地位遍历，如果当前数字大于下一位数字，则应该被去掉
+            # 先判断出是否需要 pop，再去 push
             while len(s) != 0 and s[len(s) - 1] > number and k > 0:
-                s.pop(i)
+                s.pop(-1)
                 k -= 1
+
             if number != 0 or len(s) != 0:
                 s.append(number)
-        while len(s) != 0 and k > 0:
-            s.pop(-1)
-            k -= 1
-        result = ""
+        print(s)
+        # while len(s) != 0 and k > 0:
+        #     s.pop(-1)
+        #     k -= 1
+        # result = ""
         result = ''.join(str(i) for i in s)
         return result
 
 
-if __name__ == '__main__':
-    S = Solution()
-    print(S.removeknums("1432219", 2))
+if __name__ == '__main__' :
+    s = Solution()
+    print(s.removeKNums("1432219", 2))
