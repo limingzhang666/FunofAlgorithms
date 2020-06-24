@@ -22,6 +22,7 @@ import time
 class Solution:
     USE_MY_ISVALUE = 1
 
+
     def OnCharListReady(self, char_items):
         """
         判断结果是否满足，如果满足则 print
@@ -37,6 +38,7 @@ class Solution:
         d = self.MakeIntegerValue(char_items, diff)
         if (m - s) == d:
             print(str(m) + "-" + str(s) + "=" + str(d))
+
 
     def MakeIntegerValue(self, char_items, caluStr):
         """
@@ -74,15 +76,16 @@ class Solution:
         """
         #
         if value_Item[0] == 0:
-            if self.USE_MY_ISVALUE:
+            # if self.USE_MY_ISVALUE:
                 # 开始位置的数字不能是0，也就是W、G和D这三个字母不能是0，
-                if char_Item[0] == 'W' or char_Item[0] == 'D' or char_Item[0] == 'G':
+            if char_Item[0] == 'W' or char_Item[0] == 'D' or char_Item[0] == 'G':
                     return False
             else:
                 # 如果当前位置是0，且当前字母不是wdg，  返回 （！leading），
                 return not char_Item[2]
         # 如果当前位置不是0，则判断当前值是否被使用过
         return not value_Item[1]
+
 
     def SearchResult(self, char_items, char_values, index, callback):
         """
@@ -109,7 +112,7 @@ class Solution:
 
 
 if __name__ == '__main__':
-    s = Solution();
+    s = Solution()
     # 字符元素列表
     char_item = [
         ['W', -1, True], ['D', -1, True], ['O', -1, False],
