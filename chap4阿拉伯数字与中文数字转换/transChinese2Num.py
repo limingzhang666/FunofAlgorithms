@@ -37,11 +37,10 @@ class Solution:
         :param chn_str:
         :return:
         """
-        for index, value in enumerate(self.chn_value_pair):
+        for index, value in enumerate(self.chnNumChar):
             if chn_str == value:
                 return index
-            else:
-                return -1
+        return -1
 
     def ChnUnitToValue(self, chn_str):
         """
@@ -52,7 +51,7 @@ class Solution:
         """
         # for index, (x, y, z) in enumerate(self.chn_value_pair):
         for index, value in enumerate(self.chn_value_pair):
-            print('value', value)
+            # print('value', value)
             if chn_str == value[0]:
                 return index
         return -1
@@ -69,31 +68,39 @@ class Solution:
         secUnit = False
         pos = 0
         while pos < len(chineseStr):
+            # 1.当 当前中文字符对应的是：   中文的 0~9的数字时候，处理方式 是：
             alabo_num = self.ChineseToValue(chineseStr[pos:pos + 1])
             if alabo_num >= 0:
-                '''若num>=0，代表该位置（pos），所对应的是数字不是权位。若小于0，则表示为权位'''
+                '''1. 若num>=0，代表该位置（pos），所对应的是数字不是权位。若小于0，则表示为权位'''
                 number = alabo_num
                 pos += 1
-                # pos是最hou一位，直接将number加入到section中
-                if pos >= chineseStr.len():
+                # pos是最hou一位，直接结束
+                if pos >= len(chineseStr):
                     section += number
                     rtn += section
                     break
             else:
+                '''2 当前中文 文字对应的是：十 百 千 万 亿'''
                 chnNameValueIndex = self.ChnUnitToValue(chineseStr[pos:pos + 1])
-                '''//chnNameValue[chnNameValueIndex].secUnit==true，表示该位置所对应的权位是节权位，'''
-                if self.chn_value_pair[chnNameValueIndex][2]:
-                    section = (section + number) * self.chn_value_pair[chnNameValueIndex][1]
+
+                secUnit = self.chn_value_pair[chnNameValueIndex][2]
+                unit = self.chn_value_pair[chnNameValueIndex][1]
+                if secUnit:
+                    '''2.1  当前中文对应的 是节权位(万，亿)，说明一个节 已经结束'''
+
+                    '''chnNameValue[chnNameValueIndex].secUnit==true，表示该位置所对应的权位是节权位，'''
+                    section = (section + number) * unit
                     rtn += section
                     section = 0
                 else:
-                    section += number * self.chn_value_pair[chnNameValueIndex][1]
-                    pos += 1
-                    number = 0;
-                    if (pos >= str.length()):
-                        rtn += section;
-                        break
-            return rtn
+                    '''2.2 当前中文 对应的是 十 百  千'''
+                    section += number * unit
+                number = 0
+                pos += 1
+                if pos >= len(chineseStr):
+                    rtn += section
+                    break
+        return rtn
 
 
 if __name__ == '__main__':
