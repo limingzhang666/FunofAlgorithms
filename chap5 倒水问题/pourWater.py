@@ -54,7 +54,7 @@ class Solution:
         for state in next_state:
             # 遍历所有可能的下一状态
             if state not in record:
-                # 保证当前状态没在以前出现过。 如果状态已经出现还进行搜索就会形成状态环路，陷入死循环
+                # 保证当前状态没在以前出现过。 如果状态已经出现还进行搜索就会形成状态 环路，陷入死循环
                 record.append(state)
                 # 添加新的状态 到列表中
                 if state == final_bucket_state:
